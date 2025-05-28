@@ -8,7 +8,7 @@ run "setup_name" {
     }
 }
 
-run "create_project" {
+run "create_projec_with_fixture" {
     command = apply
 
     variables {

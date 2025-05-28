@@ -3,19 +3,19 @@
 # relies on module outputs to check values
 
 run "example_basic" {
-    command = apply
+  command = apply
 
-    module {
-      source = "./examples/basic"
-    }
+  module {
+    source = "./examples/basic"
+  }
 
-    variables {
-      organization_name = "example_org_dmullen"
-      email             = "test@example.com"
-    }
+  variables {
+    organization_name = "example_org_dmullen"
+    email             = "test@example.com"
+  }
 
-    assert {
-      condition = module.example_basic.tfe_project_name == "test"
-      error_message = "Project ID should be 'test'"
-    }
+  assert {
+    condition     = module.example_basic.tfe_project_name == "test"
+    error_message = "Project ID should be 'test'"
+  }
 }

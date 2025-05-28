@@ -1,32 +1,33 @@
 # terraform test -filter="tests/1_project.tftest.hcl"
 
+# passed to every run
 variables {
-  # passed to every run
   email = "test_1_project@example.com"
 }
 
 run "create_project" {
-    command = apply
+  command = apply
 
-    variables {
-      # scoped to embedded run
-      organization_name = "test_1_project"
-    }
+  # scoped to embedded run
+  variables {
+    organization_name = "test_1_project"
+  }
 
-    assert {
-      condition = tfe_project.test.name == "test"
-      error_message = "Project ID should be 'test'"
-    }
+  assert {
+    condition     = tfe_project.test.name == "test"
+    error_message = "Project ID should be 'test'"
+  }
 }
 
 run "create_project_failure" {
-    command = plan # expect_failures only work with plan
+  # expect_failures only work with plan
+  command = plan
 
-    variables {
-      organization_name = "drew"
-    }
+  variables {
+    organization_name = "drew"
+  }
 
-    expect_failures = [ 
-      var.organization_name
-    ]
+  expect_failures = [
+    var.organization_name
+  ]
 }

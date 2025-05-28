@@ -8,26 +8,26 @@ override_resource {
 }
 
 run "setup_name_mocked" {
-    command = apply
+  command = apply
 
-    module {
-        source = "./tests/fixtures/random_string"
-    }
+  module {
+    source = "./tests/fixtures/random_string"
+  }
 }
 
 # mocks value from random provider
 # creates org & project using mocked value name
 
 run "create_project_with_mock" {
-    command = apply
+  command = apply
 
-    variables {
-      organization_name = run.setup_name_mocked.random_string
-      email             = "${run.setup_name_mocked.random_string}@example.com"
-    }
+  variables {
+    organization_name = run.setup_name_mocked.random_string
+    email             = "${run.setup_name_mocked.random_string}@example.com"
+  }
 
-    assert {
-      condition = tfe_project.test.organization == "test-random"
-      error_message = "Organization name should match the random string"
-    }
+  assert {
+    condition     = tfe_project.test.organization == "test-random"
+    error_message = "Organization name should match the random string"
+  }
 }
